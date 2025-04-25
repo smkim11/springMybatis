@@ -18,7 +18,7 @@ public class StudentController {
 	StudentService studentService;
 	
 	// 전체 출력
-	@GetMapping("/students")
+	@GetMapping("/student")
 	public List<Student> students() {
 	
 		return studentService.getAll(); // List<Student> -> JSON 문자열로 변경
