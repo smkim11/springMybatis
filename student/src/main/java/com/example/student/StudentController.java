@@ -30,7 +30,7 @@ public class StudentController {
 		return studentService.getOneByName(name);
 	}
 	
-	@GetMapping("/student") 
+	@GetMapping("/student")  // @RequestParam을 사용하여 'student?name=이름'으로 검색
 	public Student studentOne2(@RequestParam String name) {
 		return studentService.getOneByName(name);
 	}
