@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mbboard.mapper.BoardMapper">
 
+	<!--전체 리스트-->
 	<select id="selectBoardListByPage" resultType="com.example.mbboard.dto.Board" parameterType="com.example.mbboard.dto.Page">
 		select board_no boardNo, board_title boardTitle
 		from board 
@@ -11,6 +12,7 @@
 		order by board_no desc limit #{beginRow},#{rowPerPage}
 	</select>
 	
+	<!--전체 개수-->
 	<select id="totalCount" parameterType="com.example.mbboard.dto.Page">
 		select count(*) from board
 			<where>
@@ -18,6 +20,7 @@
 			</where>
 	</select>
 	
+	<!--상세보기-->
 	<select id="selectBoardOne" resultType="com.example.mbboard.dto.Board" parameterType="com.example.mbboard.dto.Board">
 		select board_no boardNo, board_title boardTitle, 
 			board_content boardContent, board_user boardUser,
@@ -25,11 +28,13 @@
 		from board where board_no = #{boardNo}
 	</select>
 	
+	<!--추가-->
 	<insert id="insertBoard" parameterType="com.example.mbboard.dto.Board">
 		insert into board(board_title, board_content, board_user) 
 					values(#{boardTitle},#{boardContent},#{boardUser})
 	</insert>
 
+	<!--수정-->
 	<update id="updateBoard" parameterType="com.example.mbboard.dto.Board">
 		update board
 		<set>
@@ -42,6 +47,7 @@
 		where board_no = #{boardNo}
 	</update>
 	
+	<!--삭제-->
 	<delete id="deleteBoardByKey" parameterType="com.example.mbboard.dto.Board">
 		delete from board where board_no = #{boardNo}
 	</delete>

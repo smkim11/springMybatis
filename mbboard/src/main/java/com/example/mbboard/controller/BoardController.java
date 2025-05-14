@@ -15,13 +15,9 @@ import com.example.mbboard.service.IBoardService;
 @Controller
 public class BoardController {
 
-    private final BoardService boardService_1;
-	@Autowired IBoardService boardService;
-
-    BoardController(BoardService boardService_1) {
-        this.boardService_1 = boardService_1;
-    } // 인터페이스 형태로 의존성 주입 -> 디커플링
+	@Autowired IBoardService boardService; // 인터페이스 형태로 의존성 주입 -> 디커플링
 	
+	// 전체 리스트
 	@GetMapping("/boardList")
 	public String boardList(Model model, Page p) {
 		Page p2 = new Page(p.getCurrentPage(),p.getRowPerPage(),p.getSearchWord());
@@ -34,6 +30,7 @@ public class BoardController {
 		return "boardList";
 	}
 	
+	// 상세페이지
 	@GetMapping("/boardOne")
 	public String boardOne(Model model,Board board) {
 		
@@ -41,6 +38,7 @@ public class BoardController {
 		return "boardOne";
 	}
 	
+	// 추가
 	@GetMapping("/insertBoard")
 	public String insertBoard() {
 			
@@ -53,6 +51,7 @@ public class BoardController {
 		return "redirect:/boardList";
 	}
 	
+	// 수정
 	@GetMapping("/updateBoard")
 	public String updateBoard(Model model, Board board) {
 		model.addAttribute("board",boardService.selectBoardOne(board));
@@ -65,6 +64,7 @@ public class BoardController {
 		return "redirect:/boardOne?boardNo="+board.getBoardNo();
 	}
 	
+	// 삭제
 	@GetMapping("/deleteBoard")
 	public String deleteBoard(Board board) {
 		boardService.deleteBoard(board);

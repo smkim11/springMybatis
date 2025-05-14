@@ -18,26 +18,32 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardService implements IBoardService{
 	@Autowired BoardMapper boardMapper; // 인터페이스 형태로 의존성 주입 -> 디커플링
 	
+	// 전체 리스트
 	public List<Board> selectBoardList(Page p){
 		return boardMapper.selectBoardListByPage(p);
 	}
 	
+	// 전체 개수
 	public int totalCount(Page p) {
 		return boardMapper.totalCount(p);
 	}
 	
+	// 상세보기
 	public Board selectBoardOne(Board b) {
 		return boardMapper.selectBoardOne(b);
 	}
 	
+	// 추가
 	public int insertBoard(Board b) {
 		return boardMapper.insertBoard(b);
 	}
 	
+	// 수정
 	public int updateBoard(Board b) {
 		return boardMapper.updateBoard(b);
 	}
 	
+	// 삭제
 	public int deleteBoard(Board b) {
 		return boardMapper.deleteBoardByKey(b);
 	}
