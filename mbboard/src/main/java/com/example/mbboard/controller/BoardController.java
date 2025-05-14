@@ -30,6 +30,20 @@ public class BoardController {
 		return "boardList";
 	}
 	
+	/*  Controller에서 기본값 설정후 리스트 출력하는 방식
+	 * 
+	 * @GetMapping("/boardList")
+	 * public String boardList(Model model, @RequestParam(defaultValue="1") int currentPage
+	 * 									, @RequestParam(defaultValue="") String searchWord){
+	 * 		Page p = new Page(currentPage, 10, boardService.totalCount(searchWord), searchWord);
+	 * 		
+	 * 		model.addAttribute("p",p);
+	 * 		model.addAttribute("list",boardService.selectBoardList(p));
+	 * 
+	 * 		return "boardList";
+	 * 	}
+	 */
+	
 	// 상세페이지
 	@GetMapping("/boardOne")
 	public String boardOne(Model model,Board board) {
