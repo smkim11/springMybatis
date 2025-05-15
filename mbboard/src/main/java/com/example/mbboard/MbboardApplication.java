@@ -2,8 +2,10 @@ package com.example.mbboard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
-@SpringBootApplication
+@SpringBootApplication // controller, service, mapper... 자동 스캔 후 bean등록
+@ServletComponentScan // webservlet, listener 자동스캔 후 bean등록
 public class MbboardApplication {
 
 	public static void main(String[] args) {
