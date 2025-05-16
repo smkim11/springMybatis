@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.mbboard.dto.ConnectCount;
 import com.example.mbboard.dto.Member;
+import com.example.mbboard.mapper.IRootService;
 import com.example.mbboard.service.ILoginService;
 
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class LoginController {
 	@Autowired ILoginService loginService;
+	@Autowired IRootService rootService;
 	
 	// 로그인
 	@GetMapping("/login")
@@ -31,6 +34,16 @@ public class LoginController {
 		Member loginMember = loginService.login(paramMember);
 		if(loginMember != null) {
 				session.setAttribute("loginMember", loginMember);
+				
+				// 멤버(ADMIN, MEMBER) 카운트 +1
+				ConnectCount cc = new ConnectCount();
+				cc.setMemberRole(loginMember.getMemberRole());
+				if(rootService.selectConnectDateBykey(cc) ==null) {
+					rootService.insertConnectCount(cc); // 오늘날짜에 loginMember.getMemberRole()로 1행 추가
+				}else {
+					rootService.updateConnectCount(cc); // 오늘날짜에 loginMember.getMemberRole()의 카운트+1
+				}
+				
 				return "redirect:/admin/adminHome";
 		}else {
 			return "redirect:/login";

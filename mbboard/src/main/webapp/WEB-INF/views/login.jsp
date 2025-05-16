@@ -31,6 +31,7 @@
 		<div>
 			${loginMember.memberId}님 <a href="/member/memberHome">memberHome</a>으로 이동
 		</div>
+		<div><a href="/">조회수</a></div>
 		<div><a href="/logout">로그아웃</a></div>
 	</c:if>
 </body>
