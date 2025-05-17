@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.example.mbboard.dto.ConnectCount;
 import com.example.mbboard.mapper.IRootService;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,11 @@ public class ConnectCountListener implements HttpSessionListener {
 	
     public void sessionCreated(HttpSessionEvent se)  { 
     	log.info("새로운 세션 생성");
+    	
+    	// currentConnectCount++
+    	se.getSession().getServletContext().setAttribute("currentConnectCount"
+    			,(Integer)(se.getSession().getServletContext().getAttribute("currentConnectCount")) + 1);
+
     	// 처음 세션이 만들어 졌을때
     	// 클라이언트(쿠키) - 서버(세션)
     	ConnectCount cc = new ConnectCount();
@@ -29,7 +35,12 @@ public class ConnectCountListener implements HttpSessionListener {
     }
     
     public void sessionDestroyed(HttpSessionEvent se)  { 
-    	// session.invalidate()
+    	// session.invalidate() or session timeout시
+    	// currentConnectCount--
+    	se.getSession().getServletContext().setAttribute("currentConnectCount"
+    			,(Integer)(se.getSession().getServletContext().getAttribute("currentConnectCount")) - 1);
+    	// Jsp : application.getAttribute("currentConnectCount");
+    	// EL : ${application_scope.currentConnectCount}, 약식 = ${currentConnectCount}
     }
 	
 }
