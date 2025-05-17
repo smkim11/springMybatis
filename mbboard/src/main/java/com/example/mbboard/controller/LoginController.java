@@ -41,7 +41,7 @@ public class LoginController {
 				if(rootService.selectConnectDateBykey(cc) ==null) {
 					rootService.insertConnectCount(cc); // 오늘날짜에 loginMember.getMemberRole()로 1행 추가
 				}else {
-					rootService.updateConnectCount(cc); // 오늘날짜에 loginMember.getMemberRole()의 카운트+1
+					rootService.updateConnectCount(cc); // 오늘날짜에 loginMember.getMemberRole()의 카운트 +1
 				}
 				
 				return "redirect:/admin/adminHome";
