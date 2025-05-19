@@ -8,4 +8,7 @@ public class Member {
 	private String memberPw;
 	private String memberRole;
 	private String saveIdCk;
+	private String pwcktime;
+	private String email;
+	private String newMemberPw;
 }

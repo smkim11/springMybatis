@@ -23,7 +23,10 @@
 		</table>
 		<button type="submit">로그인</button>
 		<input type="checkbox" value="yes" name="saveIdCk">아이디 저장
-		<div><a href="/signup">회원가입</a></div>
+		<div>
+			<a href="/signup">회원가입</a>
+			<a href="/findMemberPw">비밀번호 찾기</a>
+		</div>
 		</form>
 	</c:if>
 	
