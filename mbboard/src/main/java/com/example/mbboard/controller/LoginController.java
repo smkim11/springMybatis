@@ -24,6 +24,26 @@ public class LoginController {
 	@Autowired ILoginService loginService;
 	@Autowired IRootService rootService;
 	
+	// 비밀번호 찾기
+	@GetMapping("/findMemberPw")
+	public String findMemberPw() {
+		return "findMemberPw";
+	}
+	
+	@PostMapping("/findMemberPw")
+	public String findMemberPw(Member member) {
+		// 비밀번호 변경 
+		loginService.changeMemberPw(member);
+		// 분실 비밀번호 변경 페이지로 이동
+		return "rechangeMemberPw";
+	}
+	
+	// 임시 비밀번호 변경
+	@PostMapping("/rechangeMemberPw")
+	public String rechangeMemberPw(Member member) {
+		loginService.reChangeMemberPw(member);
+		return "redirect:/login";
+	}
 	// 로그인
 	@GetMapping("/login")
 	public String login() {
