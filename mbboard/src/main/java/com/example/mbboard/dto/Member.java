@@ -7,4 +7,5 @@ public class Member {
 	private String memberId;
 	private String memberPw;
 	private String memberRole;
+	private String saveIdCk;
 }
