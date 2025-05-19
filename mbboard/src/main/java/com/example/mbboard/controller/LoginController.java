@@ -13,6 +13,8 @@ import com.example.mbboard.dto.Member;
 import com.example.mbboard.mapper.IRootService;
 import com.example.mbboard.service.ILoginService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,10 +31,23 @@ public class LoginController {
 		return "login";
 	}
 	
+	// 세션 로그인
 	@PostMapping("/login")
-	public String login(HttpSession session, Member paramMember) {
+	public String login(HttpSession session, Member paramMember, HttpServletResponse response) {
 		Member loginMember = loginService.login(paramMember);
 		if(loginMember != null) {
+				
+				log.info(paramMember.toString());
+			
+				// 쿠키에도 로그인에 성공하면 아이디만 저장(saveIdCk값이 있을때만)
+				if(paramMember.getSaveIdCk() != null) {
+					Cookie c = new Cookie("saveId", paramMember.getMemberId());
+					response.addCookie(c);
+				}else { // 아이디 저장 안하면 쿠키 삭제
+					Cookie c = new Cookie("saveId", "");
+					response.addCookie(c);
+				}
+			
 				session.setAttribute("loginMember", loginMember);
 				
 				// 멤버(ADMIN, MEMBER) 카운트 +1
