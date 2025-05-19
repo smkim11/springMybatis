@@ -14,7 +14,7 @@
 		<table border="1">
 			<tr>
 				<th>ID</th>
-				<td><input type="text" name="memberId"></td>
+				<td><input type="text" name="memberId" value="${cookie.saveId.value}"></td><!-- cookie.getSaveId() -->
 			</tr>
 			<tr>
 				<th>PW</th>
@@ -22,7 +22,8 @@
 			</tr>
 		</table>
 		<button type="submit">로그인</button>
-		<a href="/signup">회원가입</a>
+		<input type="checkbox" value="yes" name="saveIdCk">아이디 저장
+		<div><a href="/signup">회원가입</a></div>
 		</form>
 	</c:if>
 	
