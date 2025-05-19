@@ -43,4 +43,9 @@
 	<update id="updatePw" parameterType="com.example.mbboard.dto.Member">
 		update member set member_pw = #{memberPw} where member_id = #{memberId}
 	</update>
+	
+	<!--비밀번호 찾기 -> 랜덤 비밀번호 -->
+	<update id="changeMemberPw" parameterType="com.example.mbboard.dto.Member">
+		update member set member_pw = #{memberPw}, pwcktime=now() where member_id = #{memberId} and email = #{email}
+	</update>
 </mapper>

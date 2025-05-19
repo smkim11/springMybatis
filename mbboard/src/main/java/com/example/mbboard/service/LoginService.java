@@ -1,8 +1,11 @@
 package com.example.mbboard.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Service
 public class LoginService implements ILoginService{
+	@Autowired JavaMailSender javaMailSender;
 	@Autowired LoginMapper loginMapper;
 	
 	// 로그인
@@ -57,6 +61,29 @@ public class LoginService implements ILoginService{
 	@Override
 	public void updatePw(Member member) {
 		loginMapper.updatePw(member);
+		
+	}
+	
+	// 분실한 비밀번호의 임시 비밀번호
+	@Override
+	public void changeMemberPw(Member member) {
+		// 새로운 임시 패스워드를 생성
+		String randomPw = UUID.randomUUID().toString().replace("-", "").substring(0,8);
+		member.setMemberPw(randomPw);
+		int row = loginMapper.changeMemberPw(member);
+		if(row == 1) {
+			// 메일로 변경된 비밀번호를 보낸다.
+			log.info("변경된 비밀번호: " + randomPw);
+			
+			SimpleMailMessage msg = new SimpleMailMessage();
+			msg.setFrom("admin@localhost.com");
+			msg.setTo(member.getEmail());
+			msg.setSubject("변경된 비밀번호 입니다");
+			msg.setText("변경된 비밀번호: "+member.getMemberPw());
+			msg.setText("10분안에 로그인하여 수정하셔야 합니다");
+			
+			javaMailSender.send(msg);
+		}
 		
 	}
 }

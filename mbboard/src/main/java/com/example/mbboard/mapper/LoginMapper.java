@@ -15,4 +15,5 @@ public interface LoginMapper {
 	void insertId(Member member);
 	void updateRole(Member member);
 	void updatePw(Member member);
+	int changeMemberPw(Member member);
 }

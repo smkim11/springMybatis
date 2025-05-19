@@ -13,4 +13,5 @@ public interface ILoginService {
 	void updateRole(Member member);
 	void updatePw(Member member);
 	String selectPw(String memberId);
+	void changeMemberPw(Member member);
 }
