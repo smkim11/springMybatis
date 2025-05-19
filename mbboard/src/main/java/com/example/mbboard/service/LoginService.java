@@ -78,12 +78,18 @@ public class LoginService implements ILoginService{
 			SimpleMailMessage msg = new SimpleMailMessage();
 			msg.setFrom("admin@localhost.com");
 			msg.setTo(member.getEmail());
-			msg.setSubject("변경된 비밀번호 입니다");
-			msg.setText("변경된 비밀번호: "+member.getMemberPw());
+			msg.setSubject("변경된 비밀번호 입니다 : "+ member.getMemberPw());
 			msg.setText("10분안에 로그인하여 수정하셔야 합니다");
 			
 			javaMailSender.send(msg);
 		}
+		
+	}
+
+	// 임시 비밀번호 재설정
+	@Override
+	public void reChangeMemberPw(Member member) {
+		loginMapper.reChangeMemberPw(member);
 		
 	}
 }

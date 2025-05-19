@@ -48,4 +48,13 @@
 	<update id="changeMemberPw" parameterType="com.example.mbboard.dto.Member">
 		update member set member_pw = #{memberPw}, pwcktime=now() where member_id = #{memberId} and email = #{email}
 	</update>
+	
+	<!--email로 받은 임시 비밀번호 재설정-->
+	<update id="reChangeMemberPw" parameterType="com.example.mbboard.dto.Member">
+		UPDATE member set member_pw = #{newMemberPw}
+			where member_pw = #{memberPw}
+			and pwcktime is not null
+			and timestampdiff(minute,pwcktime,now())<![CDATA[<]]>11
+	</update>
+	
 </mapper>
